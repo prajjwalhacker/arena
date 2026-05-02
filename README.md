@@ -24,3 +24,25 @@ Insights:
 Conclusion:
 - This problem behaves more like a lookup/aggregation problem than a pure ML problem
 - Feature engineering is more impactful than model complexity
+
+## Feature Engineering Improvements
+
+To improve the baseline model, I extended the feature set with route-level and time-aware signals.
+
+### Approach
+- Added route_avg: average duration for each (pickup_zone, dropoff_zone)
+- Added route_hour_avg: average duration for each (pickup_zone, dropoff_zone, hour)
+- Retained the original XGBoost model and training pipeline
+
+### Results
+- Baseline (XGBoost): ~355 seconds MAE
+- Improved model: ~292 seconds MAE
+
+### Observations
+- Route-level aggregation introduces a strong signal and improves performance
+- Time-of-day (hour) helps capture traffic variations
+- However, the model does not fully leverage these features and still underperforms compared to pure aggregation approaches
+
+### Insight
+- This problem appears to be heavily driven by historical route patterns
+- Simply adding features is not sufficient — the model must be guided to effectively use them
