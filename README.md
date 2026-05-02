@@ -46,3 +46,19 @@ To improve the baseline model, I extended the feature set with route-level and t
 ### Insight
 - This problem appears to be heavily driven by historical route patterns
 - Simply adding features is not sufficient — the model must be guided to effectively use them
+
+## Hybrid Model (Aggregation + ML)
+
+To further improve prediction accuracy, I introduced a hybrid approach combining aggregation-based estimates with machine learning.
+
+### Approach
+- Use route_hour_avg (pickup_zone, dropoff_zone, hour) as the primary signal
+- Train an XGBoost model on basic temporal and zone features
+- Combine both predictions using a weighted average
+
+Prediction:
+final_prediction = 0.7 * aggregation + 0.3 * ML
+
+### Results
+- Previous model: ~292 seconds MAE
+- Hybrid model: ~279 seconds MAE
